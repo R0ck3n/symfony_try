@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+
+
+<div class="example-wrapper container mt-5 mb-5">
+    {{ form_start(formCocktail,{'action':path('back_coktail_ajouter')}) }}
+    <div class="row">
+        <div class="col-md-4">
+            {{ form_row(formCocktail.firstname) }}
+        </div>
+        <div class="col-md-4">
+            {{ form_row(formCocktail.lastname) }}
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-success">Ajouter</button>
+        </div>
+    </div>
+    {{ form_end(formCocktail) }}
+</div>
+
+
+{% endblock %}
