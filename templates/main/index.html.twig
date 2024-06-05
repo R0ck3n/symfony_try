@@ -5,6 +5,15 @@
 {% block body %}
 
 
+
+{% for type, messages in app.session.flashbag.all() %}
+    {% for message in messages %}
+            <div class="alert alert-{{type}} mt-5" role="alert">
+            <i class="fa fa-info-circle"></i>
+        &nbsp; {{message}}</div>
+    {% endfor %}
+{% endfor %}
+
 <div class="example-wrapper container mt-5 mb-5">
     {{ form_start(formCocktail,{'action':path('back_coktail_ajouter')}) }}
     <div class="row">
@@ -20,6 +29,43 @@
     </div>
     {{ form_end(formCocktail) }}
 </div>
+
+<div class="container">
+    <h1>Liste des convives :</h1>
+
+    <br><br>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Prenom</th>
+                <th>Nom</th>
+                <th colspan="2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for p in peoples %}
+        <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ p.firstname }}</td>
+        <td>{{ p.lastname }}</td>
+        <td>
+            <a href="#" class="btn btn-primary">
+                <i class="fa fa-edit"></i>
+            </a>
+        </td>
+        <td>
+            <a href="#" class="btn btn-danger">
+                <i class="fa fa-trash"></i>
+            </a>
+        </td>
+        </tr>
+        {% endfor %}
+        
+        </tbody>
+    </table>
+</div>
+
 
 
 {% endblock %}
