@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+
+
+
+{% for type, messages in app.session.flashbag.all() %}
+    {% for message in messages %}
+            <div class="alert alert-{{type}} mt-5" role="alert">
+            <i class="fa fa-info-circle"></i>
+        &nbsp; {{message}}</div>
+    {% endfor %}
+{% endfor %}
+
+<div class="example-wrapper container mt-5 mb-5">
+    {{ form_start(formCocktail) }}
+    <div class="row">
+        <div class="col-md-4">
+            {{ form_row(formCocktail.firstname) }}
+        </div>
+        <div class="col-md-4">
+            {{ form_row(formCocktail.lastname) }}
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-success">Enregistrer</button>
+            <a class="btn btn-danger" href="/">Annulé</a>
+        </div>
+    </div>
+    {{ form_end(formCocktail) }}
+</div>
+
+
+
+
+{% endblock %}

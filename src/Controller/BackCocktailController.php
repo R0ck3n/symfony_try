@@ -42,36 +42,34 @@ class BackCocktailController extends AbstractController
             $this->addFlash('primary', 'Nouveau : ' . $firstname . ' ' . $lastname);
             return $this->redirectToRoute("front_cocktail_home");
         }
+
     }
 
 
     #[Route('/update/{id}', name: 'back_coktail_update')]
-    public function update(EntityManagerInterface $em, Request $request): Response
+    public function update(Cocktail $cocktail, EntityManagerInterface $em, Request $request): Response
     {
 
-        // $cocktail = new Cocktail();
+        $formCocktail = $this->createForm(CocktailType::class, $cocktail);
+        $formCocktail->handleRequest($request);
+    
+        if ($formCocktail->isSubmitted() && $formCocktail->isValid()) {
 
-        // $formCocktail = $this->createForm(CocktailType::class, $cocktail);
+            $em->flush();
+    
+            // Ajouter un message flash
+            $this->addFlash('success', 'Profil mis à jour avec succès.');
+    
+            // Redirection après la mise à jour
+            return $this->redirectToRoute("front_cocktail_home");
+        }
 
-        // $formCocktail->handleRequest($request);
+        return $this->render('main/update.html.twig', [
+            'controller_name' => 'Team builder',
+            'formCocktail' => $formCocktail->createView(),
+            'people' => $cocktail
+        ]);
 
-        // if ($formCocktail->isSubmitted() && $formCocktail->isValid()) {
-
-        //     $firstname = $formCocktail->get('firstname')->getData();
-        //     $lastname = $formCocktail->get('lastname')->getData();
-
-
-        //     $cocktail->setFirstname($firstname);
-        //     $cocktail->setLastname($lastname);
-
-
-        //     $em->persist($cocktail); 
-        //     $em->flush();
-
-        //     // Ajouter un message flash
-        //     $this->addFlash('primary', 'Nouveau : ' . $firstname . ' ' . $lastname);
-        //     return $this->redirectToRoute("front_cocktail_home");
-        // }
     }
 
     #[Route('/delete/{id}', name: 'back_coktail_delete')]
